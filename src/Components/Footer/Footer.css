@@ -1,0 +1,117 @@
+.footer-container{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    background-color: #2D2B2F;
+    padding: 55px 0 0 0;
+    box-sizing: border-box;
+}
+footer{
+    width: 1440px;
+}
+.footer-floor{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.footer-floor_column{
+    width: 50%;
+}
+.floor_name{
+    font-size: 30px;
+    color: #fff;
+    margin-bottom: 30px;
+}
+.contacts_list{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+.contacts_list li{
+    margin-bottom: 25px;
+}
+.contacts_list a{
+    color: #fff;
+    text-decoration: none;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+}
+.contacts_list svg{
+    margin-right: 36px;
+    width: 30px;
+    height: 30px;
+}
+.contacts_list a:last-child{
+    align-items: flex-start;
+}
+
+.footer-form{
+    display: flex;
+    align-items: flex-end;
+    flex-wrap: wrap;
+}
+.footer-form p{
+    font-size: 24px;
+    color: #fff;
+    margin: 0;
+    margin-bottom: 20px;
+}
+.footer-form input{
+    width: 450px;
+    border-radius: 5px;
+    border: none;
+    padding: 20px 20px;
+    box-sizing: border-box;
+    font-size: 18px;
+    color: #292929;
+    margin-right: 33px;
+}
+.footer-form button{
+    text-transform: uppercase;
+    border: 1px solid #fff;
+    background: none;
+    color: #fff;
+    padding: 15px 15px;
+    font-size: 24px;
+    cursor: pointer;
+}
+.socials_list{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: flex;
+}
+.socials_list li{
+    margin-right: 50px;
+}
+.socials_list svg{
+    height: 30px;
+}
+.footer-interface{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 50px;
+    padding-top: 25px;
+    padding-bottom: 34px;
+    border-top: 1px solid #fff;
+    align-items: center;
+}
+.footer-interface a{
+    font-size: 36px;
+    font-weight: bold;
+    color: #e5e5e5;
+    text-decoration: none;
+}
+.footer-interface span{
+    font-weight: 200;
+    font-size: 24px;
+    color: #e5e5e5;
+}
+.footer-interface button{
+    background: none;
+    border: none;
+    cursor: pointer;
+}

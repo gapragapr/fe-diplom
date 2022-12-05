@@ -1,0 +1,67 @@
+.find-ticket_form{
+    padding: 80px 21px 60px 21px;
+    box-sizing: border-box;
+    background-color: rgba(41, 41, 41, .8);
+}
+.find-ticket_row p{
+    color: #fff;
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+.find-ticket_row_content{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.find-ticket_row input{
+    width: 320px;
+    border-radius: 5px;
+    border: none;
+    padding: 20px;
+    box-sizing: border-box;
+    font-size: 18px;
+    color: #292929;
+    background-repeat: no-repeat;
+    background-position: 95% center;
+}
+.find-ticket_row input::placeholder{
+    color: #e5e5e5;
+    text-transform: none;
+}
+
+.find-ticket_row .road-input{
+    background-image: url('../../img/Vector\ \(2\).svg');
+    text-transform: uppercase;
+}
+.find-ticket_row .date-input{
+    background-image: url('../../img/Group\ \(3\).svg');
+    cursor: pointer;
+}
+.swap_button{
+    width: 25px;
+    height: 25px;
+    background-image: url('../../img/swapButton.png');
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    cursor: pointer;
+}
+.find-button_container{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 92px;
+}
+
+.find-button{
+    width: 320px;
+    background: #FFA800;
+    border-radius: 5px;
+    color: #292929;
+    font-size: 24px;
+    font-weight: 700;
+    padding: 17px 60px;
+    cursor: pointer;
+    text-transform: uppercase;
+    border: none;
+}
