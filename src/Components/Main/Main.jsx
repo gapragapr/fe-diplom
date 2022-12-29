@@ -1,9 +1,9 @@
 import './Main.css'
-import Substract from '../../../img/Subtract.png'
-import Substract2 from '../../../img/Subtract (1).png'
-import Substract3 from '../../../img/Subtract (2).png'
-import userImg from '../../../img/image (8).png'
-import userImg2 from '../../../img/image (9).png'
+import Substract from '../../img/Subtract.png'
+import Substract2 from '../../img/Subtract (1).png'
+import Substract3 from '../../img/Subtract (2).png'
+import userImg from '../../img/image (8).png'
+import userImg2 from '../../img/image (9).png'
 
 
 function Main(){
@@ -60,7 +60,7 @@ function Main(){
                     </div>
                 </div>
             </section>
-            <section>
+            <section id='recents'>
                 <div className="section-content">
                     <h2>Отзывы</h2>
                     <div className="slider-container">

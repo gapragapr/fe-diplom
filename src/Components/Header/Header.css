@@ -4,7 +4,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    background-image: url('../../../img/LPHeaderBg.png');
+    background-image: url('../../img/LPHeaderBg.png');
     background-size: cover;
     background-position: center;
     border-bottom: #FFA800 solid 8px;
