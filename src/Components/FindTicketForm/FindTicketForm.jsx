@@ -3,38 +3,31 @@ import Tooltip from './Tooltip/Tooltip';
 import AirDatepicker from 'air-datepicker'
 import 'air-datepicker/air-datepicker.css';
 import { useState } from 'react';
-import {redirect} from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux';
+import { fecthCityesForTooltip } from '../../store/tooltipSlice';
+import { addToTicketDataInfo, swapCityesName } from '../../store/ticketFormSlice';
  
 function FindTicketForm({type}){
-    let [cityArr, setCityArr] = useState([])
     let [target, setTarget] = useState(null)
-    let [data, setData] = useState({id_city_from: null,id_city_to: null,date_start: null,date_end: null})
-
-    redirect('/login')
+    const dispatch = useDispatch()
+    const cityArr = useSelector(state => state.cityesForTooltip.cityes)
 
     function clickDateInputHandler(event){
         new AirDatepicker(`#${event.target.id}`, {
             autoClose: true,
             visible: true,
-            dateFormat: 'yyyy-MM-dd',
+            dateFormat: 'dd.MM.yyyy',
             onSelect({formattedDate}){
-                event.target.id == 'thereInput' ? setData({...data, date_start: formattedDate}) : setData({...data, date_end: formattedDate})
+                const serverDate = formattedDate.split(".").reverse().join("-");
+
+                event.target.id === 'thereInput' ? dispatch(addToTicketDataInfo({key: 'date_start', data: serverDate})) : dispatch(addToTicketDataInfo({key: 'date_end', data: serverDate}))
             }
         })
     }
 
-    function changeDateInputHandler(event){
-        const valideKeysArr = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-'];
-
-        if(!valideKeysArr.includes(event.nativeEvent.data)){
-            event.target.value = event.target.value.slice(0, -1)
-        }
-    }
 
     function changeRoadInputHandler(event){
-        fetch( `https://netology-trainbooking.netoservices.ru/routes/cities?name=${event.target.value}`)
-            .then( response => response.json())
-            .then( data => setCityArr(data))
+        dispatch(fecthCityesForTooltip(event.target.value))
 
         setTarget(event.target)
     }
@@ -48,17 +41,13 @@ function FindTicketForm({type}){
         roadInputs[0].value = roadInputTwoValue;
         roadInputs[1].value = roadInputOneValue;
 
+        dispatch(swapCityesName())
+
         e.preventDefault()
     }
 
     function clickFindTicketButtonHandler (event){
         event.preventDefault()
-
-        if (data.id_city_from !== null && data.id_city_to !== null){
-            fetch(`https://netology-trainbooking.netoservices.ru/routes?from_city_id=${data.id_city_from}&to_city_id=${data.id_city_to}`)
-                .then(response => response.json())
-                .then(data => console.log('result', data))
-        }
         
     }
 
@@ -72,7 +61,8 @@ function FindTicketForm({type}){
                             id='fromRoadInput'
                             type="text"
                             placeholder='Откуда'
-                            onChange={changeRoadInputHandler} />
+                            onChange={changeRoadInputHandler} 
+                            />
                     </label>
                     <button className="swap_button"
                             onClick={swapButtonClickHandler}></button>
@@ -81,7 +71,8 @@ function FindTicketForm({type}){
                             id='toRoadInput'
                             type="text" 
                             placeholder='Куда'
-                            onChange={changeRoadInputHandler}/>
+                            onChange={changeRoadInputHandler}
+                            />
                     </label>
                 </div>
             </div>
@@ -94,7 +85,8 @@ function FindTicketForm({type}){
                             type="text" 
                             placeholder='ДД/ММ/ГГ'
                             onClick={clickDateInputHandler}
-                            onChange={changeDateInputHandler}/>
+                            readOnly
+                            />
                     </label>
                     <label>
                         <input id='backInput'
@@ -102,14 +94,17 @@ function FindTicketForm({type}){
                             type="text" 
                             placeholder='ДД/ММ/ГГ'
                             onClick={clickDateInputHandler}
-                            onChange={changeDateInputHandler}/>
+                            readOnly
+                            />
                     </label>
                 </div>
             </div>
             <div className="find-button_container">
-                <button onClick={clickFindTicketButtonHandler} className="find-button">Найти билеты</button>
+                <button 
+                onClick={clickFindTicketButtonHandler} 
+                className="find-button">Найти билеты</button>
             </div>
-            {cityArr.length > 0 && <Tooltip cityArr={cityArr} target={target} setCityArr={setCityArr} data={data} setData={setData}/>}
+            {cityArr.length > 0 && <Tooltip cityArr={cityArr} target={target} />}
         </form>
     )
 }
