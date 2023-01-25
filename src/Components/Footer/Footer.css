@@ -30,6 +30,7 @@ footer{
 }
 .contacts_list li{
     margin-bottom: 25px;
+    width: fit-content;
 }
 .contacts_list a{
     color: #fff;

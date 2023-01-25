@@ -3,7 +3,7 @@
     box-sizing: border-box;
     background-color: rgba(41, 41, 41, .8);
 }
-.find-ticket_row p{
+.find-ticket_row .row_name{
     color: #fff;
     font-size: 30px;
     margin-bottom: 10px;
@@ -13,6 +13,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
 }
 .find-ticket_row input{
     width: 320px;
@@ -29,7 +30,12 @@
     color: #e5e5e5;
     text-transform: none;
 }
-
+.find-ticket_row label:nth-child(1) input{
+    margin-right: 17.5px; 
+}
+.find-ticket_row label:nth-child(2) input{
+    margin-left: 17.5px;
+}
 .find-ticket_row .road-input{
     background-image: url('../../img/Vector\ \(2\).svg');
     text-transform: uppercase;
@@ -45,6 +51,9 @@
     background-color: rgba(0, 0, 0, 0);
     border: none;
     cursor: pointer;
+    position: absolute;
+    top: 30%;
+    left: 48.2%;
 }
 .find-button_container{
     width: 100%;
@@ -64,4 +73,17 @@
     cursor: pointer;
     text-transform: uppercase;
     border: none;
+}
+
+.form-row .row-wrapper{
+    display: flex;
+}
+.form-row .find-ticket_row:first-child{
+    margin-right: 35px
+}
+.form-row{
+    padding: 28px 40px 76px 40px;
+}
+.form-row .find-ticket_row .row_name{
+    margin: 0 0 20px 0;
 }

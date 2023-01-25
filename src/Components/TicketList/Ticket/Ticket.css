@@ -1,0 +1,154 @@
+.ticket{
+    display: flex;
+    border: 1px solid #C4C4C4;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    margin-bottom: 53px;
+    width: 100%;
+}
+.ticket_column{
+    display: flex;
+}
+.ticket_name{
+    background-color: #E4E0E9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 200px;
+    padding: 58px 0 92px 0;
+}
+.train_name{
+    font-size: 24px;
+    font-weight: 600;
+}
+.train_road{
+    color: #292929;
+    margin: 0;
+    font-size: 16px;
+    text-transform: uppercase;
+}
+.train_road img{
+    margin-bottom: 1px;
+}
+.ticket_details{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 0 35px;
+    border-right: 1px dashed #E5E5E5;
+    box-sizing: border-box;
+}
+.details_wrapper{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    line-break: auto;
+    margin: 30px 0;
+}
+.ticket_row{
+   min-width: 150px;
+}
+.ticket_details p{
+    margin: 0;
+}
+.ticket_date{
+    color: #000000;
+    font-size: 24px;
+    font-weight: 600;
+}
+.ticket_city{
+    color: #292929;
+    font-size: 18px;
+}
+.ticket_city::first-letter{
+    text-transform: uppercase;
+}
+.ticket_stantion{
+    color: #928F94;
+    font-size: 16px;
+    width: 150px;
+}
+.ticket_duration{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: 0 35px;
+}
+.duration_time{
+    font-size: 18px;
+    color: #928F94;
+    letter-spacing: 2px;
+}
+.ticket_duration img{
+    margin-top: 10px;
+}
+.price_column{
+    padding: 40px 20px 20px 20px;
+    flex-grow: 1;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.price_list{
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.price_item{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 16px;
+    color: #3E3C41;
+    margin-bottom: 25px;
+}
+.price_item span{
+    display: inline-block;
+}
+.price_item .class_name{
+    width: 74px;
+}
+.price_item .class_seats{
+    color: #FFA800;
+    font-weight: 500;
+    min-width: 22px;
+}
+.price_item .class_price{
+    font-weight: 700;
+    font-size: 24px;
+    color: #2D2B2F;
+    width: 75px;
+    text-align: right;
+}
+.price_item .class_price img{
+    margin-left: 3px;
+}
+.road_stuff{
+    width: 100%;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    justify-content: flex-end;
+    align-items: center;
+    list-style: none;
+}
+.stuff_item{
+    margin: 0 5px;
+}
+.stuff_item path{
+    fill: #c4c4c4;
+}
+.get_ticket{
+    width: 100%;
+    background-color: #FFA800;
+    color: #fff;
+    border: none;
+    font-size: 24px;
+    font-weight: 700;
+    border-radius: 5px;
+    padding: 7px;
+    box-sizing: border-box;
+    margin-top: 20px;
+    cursor: pointer;
+}

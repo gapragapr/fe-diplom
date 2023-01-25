@@ -1,0 +1,16 @@
+.ticket_page{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.ticket-page_wrapper{
+    width: 1405px;
+    display: flex;
+    justify-content: space-between;
+}
+.ticket-page_column:nth-child(1){
+    width: 365px;
+}
+.ticket-page_column:nth-child(2){
+    width: 950px;
+}

@@ -1,16 +1,20 @@
-import './FindTicketForm.css'
 import Tooltip from './Tooltip/Tooltip';
+import './FindTicketForm.css'
 import AirDatepicker from 'air-datepicker'
 import 'air-datepicker/air-datepicker.css';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fecthCityesForTooltip } from '../../store/tooltipSlice';
-import { addToTicketDataInfo, swapCityesName } from '../../store/ticketFormSlice';
+import { addToTicketDataInfo, swapCityesName, fetchWithTicketData} from '../../store/ticketFormSlice';
+import { clearCityesStore } from '../../store/tooltipSlice';
+import { useNavigate } from 'react-router';
  
 function FindTicketForm({type}){
     let [target, setTarget] = useState(null)
     const dispatch = useDispatch()
     const cityArr = useSelector(state => state.cityesForTooltip.cityes)
+    const ticketData = useSelector(state => state.ticketForm.ticketData)
+    const navigate = useNavigate()
 
     function clickDateInputHandler(event){
         new AirDatepicker(`#${event.target.id}`, {
@@ -28,7 +32,10 @@ function FindTicketForm({type}){
 
     function changeRoadInputHandler(event){
         dispatch(fecthCityesForTooltip(event.target.value))
-
+        if (cityArr.length > 0){
+            event.target.id === 'fromRoadInput' ? dispatch(addToTicketDataInfo({key: 'from_city_id', data: cityArr[0]._id})) : dispatch(addToTicketDataInfo({key: 'to_city_id', data: cityArr[0]._id}))
+            target.id === 'fromRoadInput' ? dispatch(addToTicketDataInfo({key: 'city_name_from', data: cityArr[0].name})) : dispatch(addToTicketDataInfo({key: 'city_name_to', data: cityArr[0].name}))
+        }
         setTarget(event.target)
     }
 
@@ -48,55 +55,65 @@ function FindTicketForm({type}){
 
     function clickFindTicketButtonHandler (event){
         event.preventDefault()
-        
+
+        dispatch(fetchWithTicketData(ticketData))
+
+        dispatch(clearCityesStore())
+        navigate('/roads')
     }
 
+    function formClassName(){
+        return `find-ticket_form form-${type}`
+    } 
+
     return(
-        <form action="" id='ticketForm' className="find-ticket_form">
-            <div className="find-ticket_row">
-                <p>Направление</p>
-                <div className="find-ticket_row_content">
-                    <label>
-                        <input className='road-input'
-                            id='fromRoadInput'
-                            type="text"
-                            placeholder='Откуда'
-                            onChange={changeRoadInputHandler} 
-                            />
-                    </label>
-                    <button className="swap_button"
-                            onClick={swapButtonClickHandler}></button>
-                    <label>
-                        <input className='road-input'
-                            id='toRoadInput'
-                            type="text" 
-                            placeholder='Куда'
-                            onChange={changeRoadInputHandler}
-                            />
-                    </label>
+        <form action="" id='ticketForm' className={formClassName()}>
+            <div className="row-wrapper">
+                <div className="find-ticket_row">
+                    <p className='row_name'>Направление</p>
+                    <div className="find-ticket_row_content">
+                        <label>
+                            <input className='road-input'
+                                id='fromRoadInput'
+                                type="text"
+                                placeholder='Откуда'
+                                onChange={changeRoadInputHandler} 
+                                />
+                        </label>
+                        <label>
+                            <input className='road-input'
+                                id='toRoadInput'
+                                type="text" 
+                                placeholder='Куда'
+                                onChange={changeRoadInputHandler}
+                                />
+                        </label>
+                        {cityArr.length > 0 && <Tooltip cityArr={cityArr} target={target} />}
+                        <button className="swap_button" onClick={swapButtonClickHandler}></button>
+                    </div>
                 </div>
-            </div>
-            <div className="find-ticket_row">
-                <p>Дата</p>
-                <div className="find-ticket_row_content">
-                    <label>
-                        <input id='thereInput'
-                            className='date-input' 
-                            type="text" 
-                            placeholder='ДД/ММ/ГГ'
-                            onClick={clickDateInputHandler}
-                            readOnly
-                            />
-                    </label>
-                    <label>
-                        <input id='backInput'
-                            className='date-input' 
-                            type="text" 
-                            placeholder='ДД/ММ/ГГ'
-                            onClick={clickDateInputHandler}
-                            readOnly
-                            />
-                    </label>
+                <div className="find-ticket_row">
+                    <p className='row_name'>Дата</p>
+                    <div className="find-ticket_row_content">
+                        <label>
+                            <input id='thereInput'
+                                className='date-input' 
+                                type="text" 
+                                placeholder='ДД/ММ/ГГ'
+                                onClick={clickDateInputHandler}
+                                readOnly
+                                />
+                        </label>
+                        <label>
+                            <input id='backInput'
+                                className='date-input' 
+                                type="text" 
+                                placeholder='ДД/ММ/ГГ'
+                                onClick={clickDateInputHandler}
+                                readOnly
+                                />
+                        </label>
+                    </div>
                 </div>
             </div>
             <div className="find-button_container">
@@ -104,7 +121,6 @@ function FindTicketForm({type}){
                 onClick={clickFindTicketButtonHandler} 
                 className="find-button">Найти билеты</button>
             </div>
-            {cityArr.length > 0 && <Tooltip cityArr={cityArr} target={target} />}
         </form>
     )
 }

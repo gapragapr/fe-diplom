@@ -1,0 +1,46 @@
+.last_tickets h2{
+    font-weight: 500;
+    font-size: 30px;
+    text-transform: uppercase;
+    margin: 0;
+    margin-bottom: 30px;
+}
+.last_ticket{
+    width: 100%;
+    border: 1px solid #C4C4C4;
+    box-shadow: 0px 2px 2px rgba(62, 60, 65, 0.25);
+    padding: 18px;
+    box-sizing: border-box;
+    margin-bottom: 17px;
+    cursor: pointer;
+}
+.last_ticket_row{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.last_ticket_row p{
+    margin: 0;
+}
+.last_ticket_row:nth-child(1){
+    margin-bottom: 25px;
+}
+.last_ticket_row:nth-child(1) .last_ticket_column:nth-child(2) p{
+    text-align: right;
+}
+.last_ticket_column .ticket_city{
+    font-size: 20px;
+    margin-bottom: 3px;
+}
+.last_ticket_price{
+    color: #928F94;
+    font-size: 16px;
+}
+.last_ticket_price span{
+    font-size: 36px;
+    color: #FFA800;
+    font-weight: 600;
+}
+.last_ticket_price img{
+    height: 100%;
+}

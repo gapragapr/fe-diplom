@@ -1,5 +1,6 @@
 .tooltip-container{
     position: absolute;
+    z-index: 1;
 }
 .tooltip{
     padding: 0;
@@ -16,7 +17,7 @@
     width: 320px;
     text-transform: uppercase;
 }
-.tooltip-text{
+p.tooltip-text{
     margin: 0;
     cursor: pointer;
 }
