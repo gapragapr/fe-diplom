@@ -45,6 +45,9 @@
 .sort_settings{
     display: flex;
 }
+.number_item {
+    cursor: pointer;
+}
 .active_sort_number{
     color: #292929;
 }

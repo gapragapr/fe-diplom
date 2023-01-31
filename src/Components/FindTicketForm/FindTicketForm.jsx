@@ -1,7 +1,6 @@
+import DateInput from './DateInput/DateInput';
 import Tooltip from './Tooltip/Tooltip';
 import './FindTicketForm.css'
-import AirDatepicker from 'air-datepicker'
-import 'air-datepicker/air-datepicker.css';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fecthCityesForTooltip } from '../../store/tooltipSlice';
@@ -16,27 +15,20 @@ function FindTicketForm({type}){
     const ticketData = useSelector(state => state.ticketForm.ticketData)
     const navigate = useNavigate()
 
-    function clickDateInputHandler(event){
-        new AirDatepicker(`#${event.target.id}`, {
-            autoClose: true,
-            visible: true,
-            dateFormat: 'dd.MM.yyyy',
-            onSelect({formattedDate}){
-                const serverDate = formattedDate.split(".").reverse().join("-");
-
-                event.target.id === 'thereInput' ? dispatch(addToTicketDataInfo({key: 'date_start', data: serverDate})) : dispatch(addToTicketDataInfo({key: 'date_end', data: serverDate}))
-            }
-        })
-    }
-
 
     function changeRoadInputHandler(event){
+        clearTimeout()
         dispatch(fecthCityesForTooltip(event.target.value))
         if (cityArr.length > 0){
-            event.target.id === 'fromRoadInput' ? dispatch(addToTicketDataInfo({key: 'from_city_id', data: cityArr[0]._id})) : dispatch(addToTicketDataInfo({key: 'to_city_id', data: cityArr[0]._id}))
-            target.id === 'fromRoadInput' ? dispatch(addToTicketDataInfo({key: 'city_name_from', data: cityArr[0].name})) : dispatch(addToTicketDataInfo({key: 'city_name_to', data: cityArr[0].name}))
+            setTimeout(() => {
+                event.target.id === 'fromRoadInput' ? dispatch(addToTicketDataInfo({key: 'from_city_id', data: cityArr[0]._id})) : dispatch(addToTicketDataInfo({key: 'to_city_id', data: cityArr[0]._id}))
+            }, 500)
         }
         setTarget(event.target)
+    }
+
+    function clickRoadInputHandler(event){
+        event.target.id === 'fromRoadInput' ? dispatch(addToTicketDataInfo({key: 'from_city_id', data: ''})) : dispatch(addToTicketDataInfo({key: 'to_city_id', data: ''}))
     }
 
     function swapButtonClickHandler(e){
@@ -55,16 +47,17 @@ function FindTicketForm({type}){
 
     function clickFindTicketButtonHandler (event){
         event.preventDefault()
+        if (ticketData.from_city_id == '' || ticketData.to_city_id == '') {return}
 
-        dispatch(fetchWithTicketData(ticketData))
-
+        
         dispatch(clearCityesStore())
         navigate('/roads')
+        dispatch(fetchWithTicketData(ticketData))
     }
 
     function formClassName(){
         return `find-ticket_form form-${type}`
-    } 
+    }
 
     return(
         <form action="" id='ticketForm' className={formClassName()}>
@@ -77,6 +70,7 @@ function FindTicketForm({type}){
                                 id='fromRoadInput'
                                 type="text"
                                 placeholder='Откуда'
+                                onClick={clickRoadInputHandler}
                                 onChange={changeRoadInputHandler} 
                                 />
                         </label>
@@ -85,6 +79,7 @@ function FindTicketForm({type}){
                                 id='toRoadInput'
                                 type="text" 
                                 placeholder='Куда'
+                                onClick={clickRoadInputHandler}
                                 onChange={changeRoadInputHandler}
                                 />
                         </label>
@@ -95,24 +90,8 @@ function FindTicketForm({type}){
                 <div className="find-ticket_row">
                     <p className='row_name'>Дата</p>
                     <div className="find-ticket_row_content">
-                        <label>
-                            <input id='thereInput'
-                                className='date-input' 
-                                type="text" 
-                                placeholder='ДД/ММ/ГГ'
-                                onClick={clickDateInputHandler}
-                                readOnly
-                                />
-                        </label>
-                        <label>
-                            <input id='backInput'
-                                className='date-input' 
-                                type="text" 
-                                placeholder='ДД/ММ/ГГ'
-                                onClick={clickDateInputHandler}
-                                readOnly
-                                />
-                        </label>
+                        <DateInput id={'date_start'} type={'date_start'}/>
+                        <DateInput id={'date_end'} type={'date_end'}/>
                     </div>
                 </div>
             </div>

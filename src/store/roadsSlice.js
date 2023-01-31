@@ -13,6 +13,7 @@ export const fetchForLastTickets = createAsyncThunk(
 const roadsSlice = createSlice({
     name: 'roadsSlice',
     initialState: {
+        roadsCount: 0,
         roadsArr: [],
         lastRoadsArr: []
     },
@@ -21,6 +22,7 @@ const roadsSlice = createSlice({
     },
     extraReducers: {
         [fetchWithTicketData.fulfilled] : (state, action) => {
+            state.roadsCount = action.payload.total_count
             state.roadsArr = action.payload.items
         },
         [fetchForLastTickets.fulfilled] : (state, action) => {

@@ -1,9 +1,17 @@
 import LastTicket from "./LastTicket/LastTicket"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
+import { useEffect } from "react";
+import { fetchForLastTickets } from '../../store/roadsSlice';
 
 
 function LastTicketsList(){
+    const dispatch = useDispatch()
     const lastTicketsArr = useSelector(state => state.roadsFromServer.lastRoadsArr)
+    useEffect(() => {
+        dispatch(fetchForLastTickets())
+    }, [])
+    
+    
 
     
     return(

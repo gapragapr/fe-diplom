@@ -1,0 +1,15 @@
+.sliders_row .noUi-base{
+    height: 10px;
+    width: 300px;
+}
+.sliders_row .noUi-horizontal .noUi-handle{
+    width: 18px;
+    height: 18px;
+    right: -10px;
+}
+.sliders_row .noUi-horizontal .noUi-tooltip{
+    bottom: -250%;
+}
+.sliders_row .noUi-horizontal .noUi-tooltip{
+    left: 30%;
+}

@@ -50,18 +50,18 @@ function Ticket({ticket}){
                 {ticket.arrival && 
                     <div className='details_wrapper'>
                         <div className="ticket_row">
-                            <p className="ticket_date">{getCurrentDate(ticket.arrival.from.datetime)}</p>
-                            <p className="ticket_city">{ticket.arrival.from.city.name}</p>
-                            <p className="ticket_stantion">{ticket.arrival.from.railway_station_name} вокзал</p>
+                            <p className="ticket_date to">{getCurrentDate(ticket.arrival.to.datetime)}</p>
+                            <p className="ticket_city">{ticket.arrival.to.city.name}</p>
+                            <p className="ticket_stantion">{ticket.arrival.to.railway_station_name} вокзал</p>
                         </div>
                         <div className="ticket_duration">
                             <p className="duration_time">{getCurrentDate(ticket.arrival.duration)}</p>
                             <img src={arrowFrom} alt="" />
                         </div>
                         <div className="ticket_row">
-                            <p className="ticket_date">{getCurrentDate(ticket.arrival.to.datetime)}</p>
-                            <p className="ticket_city">{ticket.arrival.to.city.name}</p>
-                            <p className="ticket_stantion">{ticket.arrival.to.railway_station_name} вокзал</p>
+                            <p className="ticket_date from">{getCurrentDate(ticket.arrival.from.datetime)}</p>
+                            <p className="ticket_city">{ticket.arrival.from.city.name}</p>
+                            <p className="ticket_stantion">{ticket.arrival.from.railway_station_name} вокзал</p>
                         </div>
                     </div>}
             </div>

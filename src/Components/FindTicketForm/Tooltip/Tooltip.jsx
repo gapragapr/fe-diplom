@@ -16,7 +16,6 @@ function Tooltip({cityArr, target}){
         target.value = item.name
         
         target.id === 'fromRoadInput' ? dispatch(addToTicketDataInfo({key: 'from_city_id', data: item._id})) : dispatch(addToTicketDataInfo({key: 'to_city_id', data: item._id}))
-        target.id === 'fromRoadInput' ? dispatch(addToTicketDataInfo({key: 'city_name_from', data: item.name})) : dispatch(addToTicketDataInfo({key: 'city_name_to', data: item.name}))
         dispatch(clearCityesStore())
     }
     return ( 
