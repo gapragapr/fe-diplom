@@ -6,9 +6,9 @@
 }
 .tickets_info{
     width: 100%;
+    height: 90px;
     display: flex;
     justify-content: space-between;
-    margin-bottom: 50px;
 }
 .tickets_info p {
     margin: 0;
@@ -24,6 +24,7 @@
     margin: 0;
     padding-left: 7px;
     list-style: none;
+    position: relative;
 }
 .active_ul{
     background: #F7F5F9;
@@ -31,7 +32,7 @@
     padding: 0px 7px 0 7px;
 }
 .active_ul .sort_item{
-    display: list-item;
+    display: block;
 }
 .sort_item{
     display: none;
@@ -40,7 +41,7 @@
 }
 .active_sort{
     color: #292929;
-    display: list-item;
+    display: block;
 }
 .sort_settings{
     display: flex;
@@ -50,4 +51,31 @@
 }
 .active_sort_number{
     color: #292929;
+}
+
+.pagination{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+.page_count{
+    width: 85px;
+    height: 75px;
+    font-size: 30px;
+    font-weight: 600;
+    margin: 0 15px;
+    color: #928F94;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+}
+.page_count_preactive{
+    border: 2px solid #FFA800;
+    color: #FFA800
+}
+.page_count_active{
+    background-color: #FFA800;
+    color: #FFF;
+    border: none;
 }

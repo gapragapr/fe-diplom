@@ -24,6 +24,11 @@ export const fetchWithTicketData = createAsyncThunk(
 const ticketFormSlice = createSlice({
     name: 'ticketForm',
     initialState: {
+        countPerPage: 5,
+        cityesName: {
+            city_name_from: '',
+            city_name_to: ''
+        },
         ticketData: {
             from_city_id: '',
             to_city_id: '',
@@ -48,7 +53,7 @@ const ticketFormSlice = createSlice({
             end_departure_hour_to: 24,
             end_arrival_hour_from: 0,
             end_arrival_hour_to: 24,
-            limit: 5,
+            limit: -1,
             offset: '',
             sort: 'date'
         },
@@ -56,23 +61,28 @@ const ticketFormSlice = createSlice({
     reducers: {
         addToTicketDataInfo(state, action){
             state.ticketData[action.payload.key] = action.payload.data
-
+        },
+        setCityName(state, action){
+            state.cityesName[action.payload.key] = action.payload.data
         },
         swapCityesName(state, action){
-            const city_id_from = state.ticketData.city_id_from;
-            const city_id_to = state.ticketData.city_id_to;
-            const city_name_from = state.ticketData.city_name_from;
-            const city_name_to = state.ticketData.city_name_to
+            const from_city_id = state.ticketData.from_city_id;
+            const to_city_id = state.ticketData.to_city_id;
+            const city_name_from = state.cityesName.city_name_from;
+            const city_name_to = state.cityesName.city_name_to
 
-            state.ticketData.city_id_from = city_id_to;
-            state.ticketData.city_id_to = city_id_from
-            state.ticketData.city_name_from = city_name_to
-            state.ticketData.city_name_to = city_name_from
+            state.ticketData.from_city_id = to_city_id;
+            state.ticketData.to_city_id = from_city_id
+            state.cityesName.city_name_from = city_name_to
+            state.cityesName.city_name_to = city_name_from
+        },
+        setCount(state, action){
+            state.countPerPage = action.payload.count
         }
 
         
     },
 })
-export const {addToTicketDataInfo, swapCityesName} = ticketFormSlice.actions
+export const {addToTicketDataInfo, setCityName, swapCityesName, setCount} = ticketFormSlice.actions
 
 export default ticketFormSlice.reducer

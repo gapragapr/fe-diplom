@@ -2,7 +2,9 @@ import noUiSlider from 'nouislider';
 import 'nouislider/dist/nouislider.css';
 import './RangeSlider.css'
 import { useDispatch, useSelector } from 'react-redux';
-import { addToTicketDataInfo } from '../../../store/ticketFormSlice';
+import { addToTicketDataInfo,fetchWithTicketData } from '../../../store/ticketFormSlice';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
 function RangeSliderPrice() {
     const dispatch = useDispatch()
@@ -16,7 +18,7 @@ function RangeSliderPrice() {
                 connect: true,
                 range: {
                     'min': 0,
-                    'max': 7000
+                    'max': 4500
                 },
                 step: 250,
                 tooltips: true,

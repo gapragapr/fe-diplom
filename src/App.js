@@ -9,7 +9,7 @@ function App() {
   return (
     <Routes>
       <Route path='/' element={<LandingPage />} />
-      <Route path='/roads' element={<TicketPage />}/>
+      <Route path='/roads/*' element={<TicketPage />}/>
     </Routes>
   );
 }

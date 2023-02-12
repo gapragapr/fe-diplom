@@ -1,7 +1,7 @@
 import './Tooltip.css'
 import { clearCityesStore } from '../../../store/tooltipSlice'
 import { useDispatch } from 'react-redux'
-import { addToTicketDataInfo } from '../../../store/ticketFormSlice'
+import { addToTicketDataInfo, setCityName } from '../../../store/ticketFormSlice'
 
 function Tooltip({cityArr, target}){
     const dispatch = useDispatch()
@@ -16,6 +16,7 @@ function Tooltip({cityArr, target}){
         target.value = item.name
         
         target.id === 'fromRoadInput' ? dispatch(addToTicketDataInfo({key: 'from_city_id', data: item._id})) : dispatch(addToTicketDataInfo({key: 'to_city_id', data: item._id}))
+        target.id === 'fromRoadInput' ? dispatch(setCityName({key: 'city_name_from', data: cityArr[0].name})) : dispatch(setCityName({key: 'city_name_to', data: cityArr[0].name}))
         dispatch(clearCityesStore())
     }
     return ( 

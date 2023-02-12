@@ -1,8 +1,9 @@
 .ticket_page{
     width: 100%;
     display: flex;
-    justify-content: center;
-    margin-top: 95px;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 195px;
 }
 .ticket-page_wrapper{
     width: 1405px;

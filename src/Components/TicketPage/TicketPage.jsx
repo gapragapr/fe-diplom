@@ -5,12 +5,16 @@ import LoadingPage from "../LoadingPage/LoadingPage"
 import TicketList from "../TicketList/TicketList"
 import LastTicketsList from "../LastTicketsList/LastTicketsList"
 import SidebarSettings from "../SidebarSettings/SidebarSettings"
+import StepList from "../StepList/StepList"
+import SeatsList from "../SeatsList/SeatsList"
+import { Routes, Route } from "react-router"
 import './TicketPage.css'
 import { useSelector } from "react-redux"
 
 function TicketPage(){
     const isLoading = useSelector(state => state.appFundamentalState.isLoading)
     const isError = useSelector(state => state.appFundamentalState.isError)
+
 
     return (
         <>
@@ -20,15 +24,22 @@ function TicketPage(){
                 </div>
             </Header>
             {isLoading && <LoadingPage />}
-            {!isLoading && <div className="ticket_page">
-                <div className="ticket-page_wrapper">
-                    <div className="ticket-page_column">
-                        <SidebarSettings />
-                        <LastTicketsList />
-                    </div>
-                    <div className="ticket-page_column"><TicketList /></div>
-                </div> 
-            </div>}
+            {!isLoading && 
+                <div className="ticket_page">
+                    <StepList />
+                    <div className="ticket-page_wrapper">
+                        <div className="ticket-page_column">
+                            <SidebarSettings />
+                            <LastTicketsList />
+                        </div>
+                        <div className="ticket-page_column">
+                            <Routes>
+                                <Route path="/" element={<TicketList />}/>
+                                <Route path="/road" element={<SeatsList />} />
+                            </Routes>
+                        </div>
+                    </div> 
+                </div>}
             <Footer />
         </>
     )

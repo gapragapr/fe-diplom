@@ -8,6 +8,10 @@ function DateInput({id, type}) {
   const dispatch = useDispatch()
   
   function clickDateInputHandler(event){
+    if (event.target.value !== '') {  
+      event.target.value = ''
+      dispatch(addToTicketDataInfo({key: type, data: ''}))
+    }
     new AirDatepicker(`#${event.target.id}`, {
         autoClose: true,
         visible: true,

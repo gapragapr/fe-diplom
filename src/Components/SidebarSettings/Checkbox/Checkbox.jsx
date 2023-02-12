@@ -1,10 +1,11 @@
-import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { addToTicketDataInfo } from '../../../store/ticketFormSlice'; 
 
 function Checkbox({type}) {
     const dispatch = useDispatch()
     const ticketData = useSelector(state => state.ticketForm.ticketData)
+
+
     let checked = false;
 
     Object.entries(ticketData).map(([key, value]) =>{

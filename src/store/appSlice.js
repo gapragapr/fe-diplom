@@ -4,11 +4,14 @@ import { fetchWithTicketData } from "./ticketFormSlice";
 const appSlice = createSlice({
     name: 'appSlice',
     initialState: {
+        step: 0,
         isError: false,
         isLoading: false
     },
     reducers: {
-
+        setStep(state, action){
+            state.step = action.step
+        }
     },
     extraReducers: (builder) => {
         builder.addCase(fetchWithTicketData.pending, (state, action) => {
@@ -27,5 +30,7 @@ const appSlice = createSlice({
         
     }
 })
+
+export const { setStep } = appSlice.actions
 
 export default appSlice.reducer

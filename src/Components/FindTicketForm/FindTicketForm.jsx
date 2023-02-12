@@ -4,7 +4,7 @@ import './FindTicketForm.css'
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fecthCityesForTooltip } from '../../store/tooltipSlice';
-import { addToTicketDataInfo, swapCityesName, fetchWithTicketData} from '../../store/ticketFormSlice';
+import { addToTicketDataInfo, swapCityesName, fetchWithTicketData, setCityName} from '../../store/ticketFormSlice';
 import { clearCityesStore } from '../../store/tooltipSlice';
 import { useNavigate } from 'react-router';
  
@@ -13,6 +13,7 @@ function FindTicketForm({type}){
     const dispatch = useDispatch()
     const cityArr = useSelector(state => state.cityesForTooltip.cityes)
     const ticketData = useSelector(state => state.ticketForm.ticketData)
+    const cityesName = useSelector(state => state.ticketForm.cityesName)
     const navigate = useNavigate()
 
 
@@ -22,6 +23,7 @@ function FindTicketForm({type}){
         if (cityArr.length > 0){
             setTimeout(() => {
                 event.target.id === 'fromRoadInput' ? dispatch(addToTicketDataInfo({key: 'from_city_id', data: cityArr[0]._id})) : dispatch(addToTicketDataInfo({key: 'to_city_id', data: cityArr[0]._id}))
+                event.target.id === 'fromRoadInput' ? dispatch(setCityName({key: 'city_name_from', data: cityArr[0].name})) : dispatch(setCityName({key: 'city_name_to', data: cityArr[0].name}))
             }, 500)
         }
         setTarget(event.target)
@@ -29,6 +31,7 @@ function FindTicketForm({type}){
 
     function clickRoadInputHandler(event){
         event.target.id === 'fromRoadInput' ? dispatch(addToTicketDataInfo({key: 'from_city_id', data: ''})) : dispatch(addToTicketDataInfo({key: 'to_city_id', data: ''}))
+        event.target.id === 'fromRoadInput' ? dispatch(setCityName({key: 'city_name_from', data: ''})) : dispatch(setCityName({key: 'city_name_to', data: ''}))
     }
 
     function swapButtonClickHandler(e){
@@ -41,6 +44,8 @@ function FindTicketForm({type}){
         roadInputs[1].value = roadInputOneValue;
 
         dispatch(swapCityesName())
+
+        
 
         e.preventDefault()
     }
@@ -59,6 +64,19 @@ function FindTicketForm({type}){
         return `find-ticket_form form-${type}`
     }
 
+    function getCurrentValue(key){
+        try {
+            if (type == 'row'){
+                return cityesName[key]
+            }
+        }
+        catch (e){
+            return
+        }
+
+        return
+    }
+
     return(
         <form action="" id='ticketForm' className={formClassName()}>
             <div className="row-wrapper">
@@ -70,6 +88,7 @@ function FindTicketForm({type}){
                                 id='fromRoadInput'
                                 type="text"
                                 placeholder='Откуда'
+                                value={getCurrentValue('city_name_from')}
                                 onClick={clickRoadInputHandler}
                                 onChange={changeRoadInputHandler} 
                                 />
@@ -79,6 +98,7 @@ function FindTicketForm({type}){
                                 id='toRoadInput'
                                 type="text" 
                                 placeholder='Куда'
+                                value={getCurrentValue('city_name_to')}
                                 onClick={clickRoadInputHandler}
                                 onChange={changeRoadInputHandler}
                                 />
