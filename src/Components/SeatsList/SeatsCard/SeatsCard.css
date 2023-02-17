@@ -68,9 +68,26 @@ p.seats_type img{
     border-radius: 5px;
     box-sizing: border-box;
     cursor: pointer;
+    position: relative;
+    width: 37px;
+    height: 37px;
 }
 .seats_card .stuff_item path{
     fill: #292929;
+}
+.seats_card .stuff_item:hover{
+    background-color: #FFA800;
+}
+.seats_card .stuff_item[title]:hover:after{
+    content: attr(title);
+    position: absolute;
+    top: 120%;
+    left: -20%;
+    padding: 5px;
+    background: #E5E5E5;
+    border-radius: 5px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    color: #292929;
 }
 .seats_card .coach_map .row_content{
     justify-content: center;
@@ -81,23 +98,101 @@ p.seats_type img{
 .map_skeleton{
     position: absolute;
     top: 28px;
-    left: 15.25%;
+    left: 15.4%;
     display: flex;
-    width: 713px;
+    width: 716px;
+    flex-wrap: wrap;
 }
 .skeleton_item{
     font-size: 14px;
     font-weight: bold;
-    padding: 8px 4px;
+    padding: 7px 4px;
     box-sizing: border-box;
     cursor: pointer;
     display: inline-block;
+    width: 27.5px;
+    text-align: center;
+
 }
 .available_false{
     background-color: #c4c4c4;
 }
 .seats_block{
-    width: 25px;
-    column-count: 2;
-    margin-right: 2.5px;
+    display: grid;
+    grid-template-rows: 30px 29px;
+    justify-content: space-between;
+    width: 88px;
+    height: 60px;
+    margin-right: 1.5px;
+    grid-auto-flow: column;
+}
+
+.seats_block .skeleton_item:nth-child(1){
+    border-left: 1px solid #999999;
+}
+.seats_block .skeleton_item:nth-child(2){
+    border-left: 1px solid #999999;
+}
+.seats_block .skeleton_item:nth-child(3){
+    border-right: 1px solid #999999;
+}
+.seats_block .skeleton_item:nth-child(4){
+    border-right: 1px solid #999999;
+}
+.skeleton_item:nth-child(3n).available_false{
+    border-right: 1px solid #999999;
+
+}
+.skeleton_item.first{
+    height: 100%;
+}
+.seats_block:has(> .third):nth-child(n + 9){
+    width: calc(88px * 2);
+    height: 30px;
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 20px;
+    align-items: center;
+}
+.seats_block:has(> .third):nth-child(n + 9) .third{
+    width: 44px;
+    border: none;
+}
+.seats_block div.skeleton_item.fourth{
+    border: none;
+    padding: 7px 4px;
+}
+.seats_block:has(> .fourth){
+    height: 45px;
+}
+.seats_block:has(> .fourth){
+    margin-top: 6px;
+}
+.seats_block:has(> .first){
+    grid-template-rows: none;
+}
+.seats_block:has(> .first) .first:nth-child(odd){
+    border: none;
+    border-left: 1px solid #999999;
+}
+.seats_block:has(> .first) .first:nth-child(even){
+    border: none;
+    border-right: 1px solid #999999;
+}
+.seats_block:has(> .fourth):nth-child(n + 9){
+    margin-top: 16px;
+}
+.fourth_map{
+    height: 165px;
+    width: 100%;
+}
+.active_seat{
+    border: 2px solid #FFA800!important;
+}
+.seats_card .active_stuff{
+    background-color: #FDB935;
+    border: none;
+}
+.seats_card .active_stuff path{
+    fill: #fff;
 }

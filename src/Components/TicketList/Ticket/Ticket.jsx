@@ -5,7 +5,7 @@ import arrowTo from '../../../img/Vector (8).png'
 import arrowFrom from '../../../img/Vector (9).png'
 import moment from 'moment/moment'
 import { useDispatch } from 'react-redux'
-import { setTicketData, fetchCurrentTicket, setTicket } from '../../../store/currentTicketSlice'
+import { setData, fetchCurrentTicket } from '../../../store/currentTicketSlice'
 import { useNavigate } from 'react-router'
 import svgs from '../../../data/svg'
 import './Ticket.css'
@@ -57,8 +57,8 @@ function Ticket({ticket}){
             }
         }
 
-        dispatch(setTicketData(data))
-        dispatch(setTicket(ticket))
+        dispatch(setData({key: 'seatsData', data: data}))
+        dispatch(setData({key: 'ticket', data: ticket}))
         dispatch(fetchCurrentTicket(data))
         navigate('road')
     }

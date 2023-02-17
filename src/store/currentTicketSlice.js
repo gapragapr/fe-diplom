@@ -5,7 +5,6 @@ export const fetchCurrentTicket = createAsyncThunk(
     async (seatsData) => {
         let response;
         let data = {}
-        const coachNumbers = new Set()
 
         function createFetchSettings(type){
             let currentAdress = `https://netology-trainbooking.netoservices.ru/routes/${seatsData[type].id}/seats?`
@@ -18,12 +17,12 @@ export const fetchCurrentTicket = createAsyncThunk(
 
         response = await fetch(createFetchSettings('departure'))
         data.departure = await response.json()
-        data.departure.map(item => item.coach.coachNumber = generateCoachNumber(0, 30))
+        data.departure.map(item => item.coach.coachNumber = generateCoachNumber(1, 30))
 
         if (seatsData.arrival){
             response = await fetch(createFetchSettings('arrival'))
             data.arrival = await response.json()
-            data.arrival.map(item => item.coach.coachNumber = generateCoachNumber(0, 30))
+            data.arrival.map(item => item.coach.coachNumber = generateCoachNumber(1, 30))
         }
 
         return data
@@ -36,17 +35,18 @@ const currentTicketSlice = createSlice({
         seatsData: {},
         seatsFetchResponse: {},
         ticket: {},
-        type: null
+        type: {
+            departure: null,
+            arrival: null
+        },
+        price: 0,
     },
     reducers: {
-        setTicketData(state, action){
-            state.seatsData = action.payload
-        },
-        setTicket(state, action){
-            state.ticket = action.payload
+        setData(state, action){
+            state[action.payload.key] = action.payload.data
         },
         setType(state, action){
-            state.type = action.payload.type
+            state.type[action.payload.key] = action.payload.data
         }
     },
     extraReducers: {
@@ -56,6 +56,6 @@ const currentTicketSlice = createSlice({
     }
 })
 
-export const {setTicketData, setTicket, setType} = currentTicketSlice.actions
+export const {setData, setType} = currentTicketSlice.actions
 
 export default currentTicketSlice.reducer
