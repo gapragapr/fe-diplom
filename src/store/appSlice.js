@@ -10,7 +10,7 @@ const appSlice = createSlice({
     },
     reducers: {
         setStep(state, action){
-            state.step = action.step
+            state.step = action.payload.step
         }
     },
     extraReducers: (builder) => {

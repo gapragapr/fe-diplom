@@ -65,7 +65,7 @@ p.train_name, p.ticket_date{
     box-sizing: border-box;
     justify-content: flex-start;
 }
-.seats_row:has(> .row_name) .row_block input{
+.seats_row:has(> .row_name) .row_block .ticket_type{
     width: 100%;
     padding: 15px 7px;
     box-sizing: border-box;
@@ -74,7 +74,13 @@ p.train_name, p.ticket_date{
     border-radius: 5px;
     font-size: 18px;
     color: #292929;
+    cursor: pointer;
 }
+.active_ticket_type{
+    box-sizing: border-box;
+    border: 1px solid rgba(255, 168, 0, 0.79);
+}
+
 .dotted_row{
     padding-top: 50px;
     border-top: 1px dotted #c4c4c4;
@@ -103,4 +109,35 @@ p.train_name, p.ticket_date{
 }
 .active_type path{
     fill: #FFA800;
+}
+.price{
+    text-align: right;
+    padding: 0 38px;
+}
+.price p{
+    color: #FFA800;
+    font-weight: 600;
+    font-size: 24px;
+}
+.button_container{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+.next_page{
+    margin-top: 100px;
+    color: #fff;
+    padding: 15px 60px;
+    border: none;
+    font-size: 24px;
+    font-weight: 600;
+    border-radius: 5px;
+}
+.active_button{
+    background-color: #FFA800;
+    cursor: pointer;
+}
+.nonactive_button{
+    background-color: #928F94;
+    cursor: not-allowed;
 }

@@ -1,0 +1,11 @@
+.passengers-page_container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.passengers-page_wrapper{
+    width: 1405px;
+}
+.passengers-page_column:nth-child(1){
+    width: 365px;
+}

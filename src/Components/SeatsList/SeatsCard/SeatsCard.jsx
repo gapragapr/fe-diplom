@@ -3,10 +3,16 @@ import fourthClass from '../../../img/coachMap3.png'
 import ruble from '../../../img/Vector (7).png'
 import svgs from '../../../data/svg'
 import './SeatsCard.css'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { setPrice, setCurrentSeats, deleteCurrentSeat, setSeatsStuff, deleteSeatStuff } from '../../../store/currentTicketSlice'
 
-function SeatsCard({seatsObj, type}) {
+function SeatsCard({seatsObj, type, cardIndex}) {
     const trainType = useSelector(state => state.currentTicket.type)
+    const currentSeats = useSelector(state => state.currentTicket.currentSeats)
+    const seatsStuff = useSelector(state => state.currentTicket.seatsStuff)
+
+    const dispatch = useDispatch()
+
 
     function createArraysMap(seats){
         let size;
@@ -24,21 +30,104 @@ function SeatsCard({seatsObj, type}) {
 
         return result
     }
-    function getCurrentClassName(seat){
+    function getCurrentClassNameForSeat(seat){
         let result = 'skeleton_item';
         if (!seat.available){
             result += ' available_false'
         }
+        currentSeats.map(item => {
+            if (item.type == type && item.trainType == trainType[type] && item.seat == seat.index && item.cardIndex == cardIndex){
+                return result += ' active_seat'
+            }
+            
+        })
         return result + ' ' + trainType[type]
 
     }
+    function getCurrentStuffClass(name, stuffName){
+        let result = 'stuff_item';
+
+        switch(name){
+            case 'air_conditing':
+                seatsObj.coach.have_air_conditing ? result += '' : result += ' nothing'
+                break;
+            case 'wifi':
+                seatsObj.coach.have_wifi ? result += '' : result += ' nothing'
+                break;  
+            case 'linens_included':
+                seatsObj.coach.is_linens_included ? result += ' included' : result += ''
+                break; 
+        }
+
+        seatsStuff.map(item => {
+            if (item.cardIndex == cardIndex && item.type == type && item.trainType == trainType[type] && item.stuffName == stuffName){
+                result += ' active_stuff'
+            }
+        })
+
+
+
+        return result
+    }
     function clickSeatHandler(event, index){
-        if (!event.currentTarget.classList.contains('available_false')){
-            event.currentTarget.classList.toggle('active_seat')
+        console.log(type)
+        if (event.currentTarget.classList.contains('available_false')){
+            return
+        }
+        event.currentTarget.classList.toggle('active_seat')
+        const dataType = document.querySelector('.active_ticket_type').dataset.type
+
+        if (event.currentTarget.classList.contains('active_seat')){
+            dispatch(setCurrentSeats({type: type, trainType: trainType[type], seatIndex: index, cardIndex: cardIndex, passengerType: 'asd'}))
+            switch(type){
+                case 'first':
+                    dispatch(setPrice({key: type, price: seatsObj.coach.price}))
+                    break;
+                case 'third':
+                    index > 32 && dispatch(setPrice({key: type, price: seatsObj.coach.side_price}))
+                    break;
+                default:
+                    index % 2 !== 0 && dispatch(setPrice({key: type, price: seatsObj.coach.top_price}))
+                    index % 2 == 0 && dispatch(setPrice({key: type, price: seatsObj.coach.bottom_price}))
+                    break;
+            } 
+        } else {
+            const findedIndex = currentSeats.findIndex(item => item.type == type && item.trainType == trainType[type] && item.seat == index && item.cardIndex == cardIndex)
+            dispatch(deleteCurrentSeat({index: findedIndex}))
+            switch(type){
+                case 'first':
+                    dispatch(setPrice({key: type, price: -seatsObj.coach.price}))
+                    break;
+                case 'third':
+                    index > 32 && dispatch(setPrice({key: type, price: -seatsObj.coach.side_price}))
+                    break;
+                default:
+                    index % 2 !== 0 && dispatch(setPrice({key: type, price: -seatsObj.coach.top_price}))
+                    index % 2 == 0 && dispatch(setPrice({key: type, price: -seatsObj.coach.bottom_price}))
+                    break;
+
+            } 
         }
     }
-    function clickStuffHandler(event, name){
+    function clickStuffHandler(event, name, stuffName){
+        if (event.currentTarget.classList.contains('included') || event.currentTarget.classList.contains('nothing')){
+            return
+        }
         event.currentTarget.classList.toggle('active_stuff')
+
+        if (event.currentTarget.classList.contains('active_stuff')){
+            dispatch(setSeatsStuff({type: type, trainType: trainType[type], stuffName: stuffName, cardIndex: cardIndex}))
+            currentSeats.map(item => {
+                dispatch(setPrice({key: type, price: seatsObj.coach[name]}))
+            })
+            
+        } else {
+            const findedIndex = seatsStuff.findIndex(item => item.cardIndex == cardIndex && item.type == type && item.trainType == trainType[type] && item.stuffName == stuffName)
+            dispatch(deleteSeatStuff({index: findedIndex}))
+            currentSeats.map(item => {
+                dispatch(setPrice({key: type, price: -seatsObj.coach[name]}))
+            })
+        }
     }
     return (
         <div className="seats_card">
@@ -69,10 +158,10 @@ function SeatsCard({seatsObj, type}) {
                     <div className="row_block">
                         <p className="seats_count">Обслуживание <span className="grey">ФПК</span></p>
                         <ul className="stuff_list">
-                            <li onClick={(e) => clickStuffHandler(e)} title='кондиционер' className="stuff_item">{svgs.termReg}</li>
-                            <li onClick={(e) => clickStuffHandler(e)} title='wi-fi' className="stuff_item">{svgs.wifi}</li>
-                            <li onClick={(e) => clickStuffHandler(e)} title='белье' className="stuff_item">{svgs.linens}</li>
-                            <li onClick={(e) => clickStuffHandler(e)} title='питание' className="stuff_item">{svgs.coffee}</li>
+                            <li onClick={(e) => clickStuffHandler(e, 'air_conditioning_price', 'air_conditioning')} title='кондиционер' className={getCurrentStuffClass('air_conditioning', 'air_conditioning')}>{svgs.termReg}</li>
+                            <li onClick={(e) => clickStuffHandler(e, 'wifi_price', 'wifi')} title='wi-fi' className={getCurrentStuffClass('wifi', 'wifi')}>{svgs.wifi}</li>
+                            <li onClick={(e) => clickStuffHandler(e, 'linens_price', 'linens')} title='белье' className={getCurrentStuffClass('linens_included', 'linens')}>{svgs.linens}</li>
+                            <li onClick={(e) => clickStuffHandler(e, 'food_price', 'food')} title='питание' className={getCurrentStuffClass('food', 'food')}>{svgs.coffee}</li>
                         </ul>
                     </div>
                 </div>
@@ -83,7 +172,7 @@ function SeatsCard({seatsObj, type}) {
                     <div className="map_skeleton">
                         {createArraysMap(seatsObj.seats).map((item, index) => {
                             return <div key={index} className="seats_block">{item.map(seat => {
-                                return <div onClick={(e) => clickSeatHandler(e, seat.index)} key={seat.index} className={getCurrentClassName(seat, seat.index)}>{seat.index}</div>
+                                return <div onClick={(e) => clickSeatHandler(e, seat.index)} key={seat.index} className={getCurrentClassNameForSeat(seat)}>{seat.index}</div>
                             })}</div>
                         })}
                     </div>

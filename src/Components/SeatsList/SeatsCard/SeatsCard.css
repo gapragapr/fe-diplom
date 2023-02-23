@@ -75,7 +75,7 @@ p.seats_type img{
 .seats_card .stuff_item path{
     fill: #292929;
 }
-.seats_card .stuff_item:hover{
+.seats_card .stuff_item:not(.included,.nothing):hover{
     background-color: #FFA800;
 }
 .seats_card .stuff_item[title]:hover:after{
@@ -195,4 +195,15 @@ p.seats_type img{
 }
 .seats_card .active_stuff path{
     fill: #fff;
+}
+.seats_card .included{
+    background-color: #FCDC9D;
+    border: none;
+    cursor: not-allowed;
+}
+.seats_card .included path{
+    fill: #928F94;
+}
+.seats_card .nothing{
+    cursor: not-allowed;
 }

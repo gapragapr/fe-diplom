@@ -1,0 +1,50 @@
+.sidebar_name{
+    text-align: center;
+    margin-bottom: 0 !important;
+}
+.sidebar_date{
+    font-size: 18px;
+    margin-left: 18px;
+    margin-top: 8px;
+    color: #fff;
+    font-weight: 400;
+}
+.details_wrapper{
+    justify-content: space-between;
+    position: relative;
+}
+.passengers_sidebar .train_name_p{
+    font-size: 18px;
+    color: #e5e5e5;
+}
+.passengers_sidebar .ticket_date{
+    color: #fff;
+}
+.passengers_sidebar .ticket_data{
+    color: #928F94;
+    font-size: 18px;
+    margin: 0;
+}
+.passengers_sidebar .ticket_city{
+    color: #fff;
+    margin-bottom: 0 !important;
+}
+.passengers_sidebar .ticket_stantion{
+    margin-top: 0;
+    width: 130px;
+}
+.passengers_sidebar .duration_time{
+    margin-bottom: 5px;
+}
+.details_duration{
+    position: absolute;
+    top: -15px;
+    left: 45%;
+    text-align: center;
+}
+.details_block{
+    width: fit-content;
+}
+.details_block.right{
+    text-align: right;
+}

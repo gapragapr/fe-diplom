@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
-import { fetchCurrentTicket, setData, setType } from "../../store/currentTicketSlice"
+import { fetchCurrentTicket, setData, setType, setPrice, clearStore } from "../../store/currentTicketSlice"
+import { setStep } from "../../store/appSlice"
 import moment from "moment/moment"
 import svgs from "../../data/svg"
 import { useNavigate } from "react-router"
@@ -10,7 +11,8 @@ import bigArrowTo from '../../img/Subtract (4).png'
 import bigArrowFrom from '../../img/Subtract (5).png'
 import arrowTo from '../../img/Vector (8).png'
 import arrowFrom from '../../img/Vector (9).png'
-import { useEffect } from "react"
+import ruble from '../../img/Vector (7).png'
+import { useState } from "react"
 import { redirect } from "react-router"
 
 
@@ -19,8 +21,9 @@ function SeatsList() {
     const seatsFetchResponse = useSelector(state => state.currentTicket.seatsFetchResponse)
     const trainType = useSelector(state => state.currentTicket.type)
     const ticket = useSelector(state => state.currentTicket.ticket)
+    const price = useSelector(state => state.currentTicket.price)
+    const currentSeats = useSelector(state => state.currentTicket.currentSeats)
     const navigate = useNavigate()
-    console.log(seatsFetchResponse)
 
     function getCurrentDate(datetime){
       return moment.utc(datetime*1000).format('HH:mm');
@@ -40,22 +43,34 @@ function SeatsList() {
           <p style={{fontSize: 18}}>{minutes} минут</p>
         </>
       ) 
-  }
-
-  function clickTrainTypeHandler(e, type){
-    e.stopPropagation()
-    const prevActive = document.querySelector(`#${type} .active_type`)
-    if (prevActive){
-      prevActive.classList.remove('active_type')
     }
-    dispatch(setType({key: type, data: e.currentTarget.dataset.type}))
-    e.currentTarget.classList.add('active_type')
-  }
+
+    function clickTrainTypeHandler(e, type){
+      e.stopPropagation()
+      const prevActive = document.querySelector(`#${type} .active_type`)
+      if (prevActive){
+        prevActive.classList.remove('active_type')
+      }
+      dispatch(setType({key: type, data: e.currentTarget.dataset.type}))
+      e.currentTarget.classList.add('active_type')
+    }
     function clickBackToTrainsHandler(){
-      dispatch(setData({key: 'ticket', data: {}}))
-      dispatch(setType({key: 'departure', data: null}))
-      dispatch(setType({key: 'arrival', data: null}))
+      dispatch(clearStore())
       navigate('/roads')
+    }
+    function clickNextPageButtonHandler(event){
+      if (event.target.classList.contains('nonactive_button')){
+        return
+      }
+
+      event.preventDefault()
+      navigate('/passengers')
+      dispatch(setStep({step: 1}))
+    }
+    function clickTicketTypeHandler(e){
+      e.preventDefault()
+      document.querySelector('.active_ticket_type').classList.remove('active_ticket_type')
+      e.target.parentElement.classList.add('active_ticket_type')
     }
 
     return (
@@ -104,22 +119,16 @@ function SeatsList() {
               <h2>Количество билетов</h2>
             </div>
             <div className="row_content">
-              <div className="row_block">
-                <label htmlFor="">
-                  <input defaultValue={'Взрослых — 0'} type="text" />
-                </label>
-                <p>Можно добавить еще 3 пассажиров </p>
+              <div data-type={'adult'} className="row_block active_ticket_type">
+                <p onClick={(e) => clickTicketTypeHandler(e)} className="ticket_type">Взрослых — 0</p>
+                <p>Можно добавить 5 пассажиров </p>
               </div>
-              <div className="row_block">
-                <label htmlFor="">
-                  <input defaultValue={'Детских — 0'} type="text" />
-                </label>
-                <p>Можно добавить еще 3 детей до 10 лет.Свое место в вагоне, как у взрослых, но дешевле в среднем на 50-65%</p>
+              <div data-type={'child'} className="row_block">
+                <p onClick={(e) => clickTicketTypeHandler(e)} className="ticket_type">Детских — 0</p>
+                <p>Можно добавить 5 детей до 10 лет.Свое место в вагоне, как у взрослых, но дешевле в среднем на 50-65%</p>
               </div>
-              <div className="row_block">
-                <label htmlFor="">
-                  <input defaultValue={'Детских «без места» — 0'} type="text" />
-                </label>
+              <div data-type={'childWithoutSeat'} className="row_block">
+                <p onClick={(e) => clickTicketTypeHandler(e)} className="ticket_type">Детских «без места» — 0</p>
               </div>
             </div>
           </div>
@@ -134,11 +143,16 @@ function SeatsList() {
               <div onClick={(e) => clickTrainTypeHandler(e, 'departure')} data-type="first" className="row_block">{svgs.luxe} Люкс</div>
             </div>
           </div>
-          {trainType && seatsFetchResponse.departure && seatsFetchResponse.departure.map(item => {
+          {trainType && seatsFetchResponse.departure && seatsFetchResponse.departure.map((item, index) => {
             if (item.coach.class_type == trainType.departure){
-              return <SeatsCard key={item.coach._id} type={'departure'} seatsObj={item}/>
+              return <SeatsCard cardIndex={index} key={item.coach._id} type={'departure'} seatsObj={item}/>
             }
           })}
+          {price.departure > 0 && 
+            <div className="price">
+              <p>{price.departure} <img src={ruble} alt="" /> </p>
+            </div>
+          }
         </div>
         {seatsFetchResponse.arrival && 
           <div className="seats_arrival seats_wrapper">
@@ -184,22 +198,16 @@ function SeatsList() {
                 <h2>Количество билетов</h2>
               </div>
               <div className="row_content">
-                <div className="row_block">
-                  <label htmlFor="">
-                    <input defaultValue={'Взрослых — 0'} type="text" />
-                  </label>
-                  <p>Можно добавить еще 3 пассажиров </p>
+                <div className="row_block active_ticket_type">
+                  <p className="ticket_type">Взрослых — 0</p>
+                  <p>Можно добавить 5 пассажиров </p>
                 </div>
                 <div className="row_block">
-                  <label htmlFor="">
-                    <input defaultValue={'Детских — 0'} type="text" />
-                  </label>
-                  <p>Можно добавить еще 3 детей до 10 лет.Свое место в вагоне, как у взрослых, но дешевле в среднем на 50-65%</p>
+                  <p className="ticket_type">Детских — 0</p>
+                  <p>Можно добавить 5 детей до 10 лет.Свое место в вагоне, как у взрослых, но дешевле в среднем на 50-65%</p>
                 </div>
                 <div className="row_block">
-                  <label htmlFor="">
-                    <input defaultValue={'Детских «без места» — 0'} type="text" />
-                  </label>
+                  <p className="ticket_type">Детских «без места» — 0</p>
                 </div>
               </div>
             </div>
@@ -214,13 +222,23 @@ function SeatsList() {
                 <div onClick={(e) => clickTrainTypeHandler(e, 'arrival')} data-type="first" className="row_block">{svgs.luxe} Люкс</div>
               </div>
             </div>
-            {trainType && seatsFetchResponse.arrival && seatsFetchResponse.arrival.map(item => {
+            {trainType && seatsFetchResponse.arrival && seatsFetchResponse.arrival.map((item, index) => {
               if (item.coach.class_type == trainType.arrival){
-                return <SeatsCard key={item.coach._id} type={'arrival'} seatsObj={item}/>
+                return <SeatsCard cardIndex={index} key={item.coach._id} type={'arrival'} seatsObj={item}/>
               }
             })}
+            {price.arrival > 0 && 
+              <div className="price">
+                <p>{price.arrival} <img src={ruble} alt="" /></p>
+              </div>
+            }
           </div>
         }
+        <div className="button_container">
+          <button onClick={(e) => clickNextPageButtonHandler(e)} className={currentSeats.length < 1 ? 'next_page nonactive_button' : 'next_page active_button'}>
+            Далее
+          </button>
+        </div>
       </div>
     )
 }
