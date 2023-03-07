@@ -13,6 +13,9 @@
     justify-content: space-between;
     position: relative;
 }
+.block_name svg{
+    margin-right: 12px;
+}
 .passengers_sidebar .train_name_p{
     font-size: 18px;
     color: #e5e5e5;
@@ -47,4 +50,40 @@
 }
 .details_block.right{
     text-align: right;
+}
+.passengers_row{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 18px;
+    color: #e5e5e5;
+}
+.passengers_row p{
+    margin: 0;
+}
+.passengers_row:first-child{
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+.passenger_price{
+    font-size: 24px;
+    font-weight: 600;
+    color: #fff;
+}
+.passengers_row img{
+    margin-left: 7px;
+}
+.result_price{
+    cursor: initial;
+}
+.result_price .block_name{
+    justify-content: space-around;
+    text-transform: uppercase;
+}
+.result_price_value{
+    color: #FFA800;
+    font-size: 48px;
+    font-weight: 600;
+    margin: 0;
 }

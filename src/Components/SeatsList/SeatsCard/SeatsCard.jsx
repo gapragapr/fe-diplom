@@ -4,11 +4,12 @@ import ruble from '../../../img/Vector (7).png'
 import svgs from '../../../data/svg'
 import './SeatsCard.css'
 import { useSelector, useDispatch } from 'react-redux'
-import { setPrice, setCurrentSeats, deleteCurrentSeat, setSeatsStuff, deleteSeatStuff } from '../../../store/currentTicketSlice'
+import { setPrice, setCurrentSeats, deleteCurrentSeat, setSeatsStuff, deleteSeatStuff, setPassengers, deletePassenger } from '../../../store/currentTicketSlice'
 
 function SeatsCard({seatsObj, type, cardIndex}) {
     const trainType = useSelector(state => state.currentTicket.type)
     const currentSeats = useSelector(state => state.currentTicket.currentSeats)
+    const passengers = useSelector(state => state.currentTicket.passengers)
     const seatsStuff = useSelector(state => state.currentTicket.seatsStuff)
 
     const dispatch = useDispatch()
@@ -70,43 +71,59 @@ function SeatsCard({seatsObj, type, cardIndex}) {
         return result
     }
     function clickSeatHandler(event, index){
-        console.log(type)
         if (event.currentTarget.classList.contains('available_false')){
             return
         }
+        const dataEl = document.querySelector(`.active_ticket_type`)
+        if (!dataEl){
+            return
+        }
+        const dataType = dataEl.dataset.type
         event.currentTarget.classList.toggle('active_seat')
-        const dataType = document.querySelector('.active_ticket_type').dataset.type
+
+
+        function calculatedPrice(price){
+            let result = 0;
+            switch(dataType){
+                case 'adult':
+                    result = price
+                    break;
+                case 'child':
+                    result = price / 2
+                    break;
+                case 'childWithoutSeat':
+                    result = price / 100 * 15
+                    break;
+
+            }
+            
+            return Math.ceil(result)
+        }
 
         if (event.currentTarget.classList.contains('active_seat')){
-            dispatch(setCurrentSeats({type: type, trainType: trainType[type], seatIndex: index, cardIndex: cardIndex, passengerType: 'asd'}))
+            let currentPrice;
             switch(type){
                 case 'first':
-                    dispatch(setPrice({key: type, price: seatsObj.coach.price}))
+                    dispatch(setPrice({key: type, price: calculatedPrice(seatsObj.coach.price)}))
+                    currentPrice = calculatedPrice(seatsObj.coach.price)
                     break;
                 case 'third':
-                    index > 32 && dispatch(setPrice({key: type, price: seatsObj.coach.side_price}))
+                    index > 32 && dispatch(setPrice({key: type, price: calculatedPrice(seatsObj.coach.side_price)}))
+                    currentPrice = calculatedPrice(seatsObj.coach.side_price)
                     break;
                 default:
-                    index % 2 !== 0 && dispatch(setPrice({key: type, price: seatsObj.coach.top_price}))
-                    index % 2 == 0 && dispatch(setPrice({key: type, price: seatsObj.coach.bottom_price}))
+                    if (index % 2 !== 0) {dispatch(setPrice({key: type, price: calculatedPrice(seatsObj.coach.top_price)})); currentPrice = calculatedPrice(seatsObj.coach.top_price)}
+                    if (index % 2 == 0) {dispatch(setPrice({key: type, price: calculatedPrice(seatsObj.coach.bottom_price)})); currentPrice = calculatedPrice(seatsObj.coach.bottom_price)}
                     break;
             } 
+            dispatch(setCurrentSeats({type: type, trainType: trainType[type], seatIndex: index, cardIndex: cardIndex, passengerType: dataType, seatPrice: currentPrice}))
+            dispatch(setPassengers({data: {type: type, trainType: trainType[type], seatIndex: index, cardIndex: cardIndex, passengerType: dataType, seatPrice: currentPrice, name: '', surname: '', fatherName: '', docType: '', docDetails: '', bd: '', gender: ''}}))
         } else {
             const findedIndex = currentSeats.findIndex(item => item.type == type && item.trainType == trainType[type] && item.seat == index && item.cardIndex == cardIndex)
+            const passengerIndex = passengers.findIndex(item => item.type == type && item.trainType == trainType[type] && item.seat == index && item.cardIndex == cardIndex)
+            dispatch(setPrice({key: type, price: -currentSeats[findedIndex].seatPrice}))
             dispatch(deleteCurrentSeat({index: findedIndex}))
-            switch(type){
-                case 'first':
-                    dispatch(setPrice({key: type, price: -seatsObj.coach.price}))
-                    break;
-                case 'third':
-                    index > 32 && dispatch(setPrice({key: type, price: -seatsObj.coach.side_price}))
-                    break;
-                default:
-                    index % 2 !== 0 && dispatch(setPrice({key: type, price: -seatsObj.coach.top_price}))
-                    index % 2 == 0 && dispatch(setPrice({key: type, price: -seatsObj.coach.bottom_price}))
-                    break;
-
-            } 
+            dispatch(deletePassenger({index: passengerIndex}))
         }
     }
     function clickStuffHandler(event, name, stuffName){

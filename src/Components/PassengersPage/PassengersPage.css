@@ -5,7 +5,12 @@
 }
 .passengers-page_wrapper{
     width: 1405px;
+    display: flex;
+    justify-content: space-between;
 }
 .passengers-page_column:nth-child(1){
     width: 365px;
+}
+.passengers-page_column:nth-child(2){
+    width: 960px;
 }

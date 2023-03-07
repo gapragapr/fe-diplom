@@ -54,6 +54,7 @@ const currentTicketSlice = createSlice({
         },
         currentSeats: [],
         seatsStuff: [],
+        passengers: []
     },
     reducers: {
         setData(state, action){
@@ -66,16 +67,22 @@ const currentTicketSlice = createSlice({
             state.price[action.payload.key] += action.payload.price
         },
         setCurrentSeats(state, action){
-            state.currentSeats.push({type: action.payload.type, trainType: action.payload.trainType, seat: action.payload.seatIndex, cardIndex: action.payload.cardIndex})
+            state.currentSeats.push({type: action.payload.type, trainType: action.payload.trainType, seat: action.payload.seatIndex, cardIndex: action.payload.cardIndex, passengerType: action.payload.passengerType, seatPrice: action.payload.seatPrice})
         },
         deleteCurrentSeat(state, action){
             state.currentSeats.splice(action.payload.index, 1)
         },
         setSeatsStuff(state, action){
-            state.seatsStuff.push({type: action.payload.type, trainType: action.payload.trainType, stuffName: action.payload.stuffName, cardIndex: action.payload.cardIndex, passengerType: action.payload.passengerType})
+            state.seatsStuff.push({type: action.payload.type, trainType: action.payload.trainType, stuffName: action.payload.stuffName, cardIndex: action.payload.cardIndex})
         },
         deleteSeatStuff(state, action){
             state.seatsStuff.splice(action.payload.index, 1)
+        },
+        setPassengers(state, action){
+            state.passengers.push(action.payload.data)
+        },
+        changePassenger(state, action){
+            state.passengers[action.payload.index][action.payload.key] = action.payload.data
         },
         clearStore(state){
             state.seatsData = {};
@@ -85,6 +92,7 @@ const currentTicketSlice = createSlice({
             state.price = {departure: 0, arrival: 0};
             state.currentSeats = [];
             state.seatsStuff = []
+            state.passengers = []
         }
         
     },
@@ -95,6 +103,6 @@ const currentTicketSlice = createSlice({
     }
 })
 
-export const {setData, setType, setPrice, setCurrentSeats, deleteCurrentSeat, setSeatsStuff, deleteSeatStuff, clearStore} = currentTicketSlice.actions
+export const {setData, setType, setPrice, setCurrentSeats, deleteCurrentSeat, setSeatsStuff, deleteSeatStuff, setPassengers, deletePassenger, changePassenger, clearStore} = currentTicketSlice.actions
 
 export default currentTicketSlice.reducer

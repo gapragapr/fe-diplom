@@ -2,6 +2,7 @@ import Header from "../Header/Header";
 import FindTicketForm from "../FindTicketForm/FindTicketForm";
 import StepList from "../StepList/StepList";
 import SidebarDetails from '../SidebarDetails/SidebarDetails'
+import PassengerList from "../PassengersList/PassengersList";
 import Footer from "../Footer/Footer";
 import './PassengersPage.css'
 
@@ -18,6 +19,9 @@ function PassengersPage(){
                 <div className="passengers-page_wrapper">
                     <div className="passengers-page_column">
                         <SidebarDetails />
+                    </div>
+                    <div className="passengers-page_column">
+                        <PassengerList />
                     </div>
 
                 </div>

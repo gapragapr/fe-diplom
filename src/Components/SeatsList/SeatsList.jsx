@@ -69,8 +69,40 @@ function SeatsList() {
     }
     function clickTicketTypeHandler(e){
       e.preventDefault()
-      document.querySelector('.active_ticket_type').classList.remove('active_ticket_type')
-      e.target.parentElement.classList.add('active_ticket_type')
+      if (!document.querySelector('.active_ticket_type')){
+        e.target.parentElement.classList.add('active_ticket_type')
+      }
+      else {
+        document.querySelector('.active_ticket_type').classList.remove('active_ticket_type')
+        e.target.parentElement.classList.add('active_ticket_type')
+      }
+    }
+    function getTicketsValue(passengerType, type){
+      let result = 0;
+
+      currentSeats.map(item => {
+        if (item.passengerType == passengerType && item.type == type){
+          result++
+        }
+      })
+
+      return result
+    }
+    function getClassNameToNextButton(){
+      // currentSeats.length < 1 ? 'next_page nonactive_button' : 'next_page active_button'
+
+      let result = 'next_page'
+
+      if (ticket.departure && price.departure <= 0 || ticket.arrival && price.arrival <= 0){
+        result += ' nonactive_button'
+      }
+      else {
+        result += ' active_button'
+      }
+      
+      
+
+      return result
     }
 
     return (
@@ -119,16 +151,15 @@ function SeatsList() {
               <h2>Количество билетов</h2>
             </div>
             <div className="row_content">
-              <div data-type={'adult'} className="row_block active_ticket_type">
-                <p onClick={(e) => clickTicketTypeHandler(e)} className="ticket_type">Взрослых — 0</p>
-                <p>Можно добавить 5 пассажиров </p>
+              <div data-type={'adult'} className="row_block">
+                <p onClick={(e) => clickTicketTypeHandler(e)} className="ticket_type">Взрослых — {getTicketsValue('adult', 'departure')}</p>
               </div>
               <div data-type={'child'} className="row_block">
-                <p onClick={(e) => clickTicketTypeHandler(e)} className="ticket_type">Детских — 0</p>
-                <p>Можно добавить 5 детей до 10 лет.Свое место в вагоне, как у взрослых, но дешевле в среднем на 50-65%</p>
+                <p onClick={(e) => clickTicketTypeHandler(e)} className="ticket_type">Детских — {getTicketsValue('child', 'departure')}</p>
+                <p>Можно добавить детей до 10 лет.Свое место в вагоне, как у взрослых, но дешевле в среднем на 50-65%</p>
               </div>
               <div data-type={'childWithoutSeat'} className="row_block">
-                <p onClick={(e) => clickTicketTypeHandler(e)} className="ticket_type">Детских «без места» — 0</p>
+                <p onClick={(e) => clickTicketTypeHandler(e)} className="ticket_type">Детских «без места» — {getTicketsValue('childWithoutSeat', 'departure')}</p>
               </div>
             </div>
           </div>
@@ -198,16 +229,15 @@ function SeatsList() {
                 <h2>Количество билетов</h2>
               </div>
               <div className="row_content">
-                <div className="row_block active_ticket_type">
-                  <p className="ticket_type">Взрослых — 0</p>
-                  <p>Можно добавить 5 пассажиров </p>
+                <div data-type={'adult'} className="row_block">
+                  <p onClick={(e) => clickTicketTypeHandler(e)} className="ticket_type">Взрослых — {getTicketsValue('adult', 'arrival')}</p>
                 </div>
-                <div className="row_block">
-                  <p className="ticket_type">Детских — 0</p>
-                  <p>Можно добавить 5 детей до 10 лет.Свое место в вагоне, как у взрослых, но дешевле в среднем на 50-65%</p>
+                <div data-type={'child'} className="row_block">
+                  <p onClick={(e) => clickTicketTypeHandler(e)} className="ticket_type">Детских — {getTicketsValue('child', 'arrival')}</p>
+                  <p>Можно добавить детей до 10 лет.Свое место в вагоне, как у взрослых, но дешевле в среднем на 50-65%</p>
                 </div>
-                <div className="row_block">
-                  <p className="ticket_type">Детских «без места» — 0</p>
+                <div data-type={'childWithoutSeat'} className="row_block">
+                  <p onClick={(e) => clickTicketTypeHandler(e)} className="ticket_type">Детских «без места» — {getTicketsValue('childWithoutSeat', 'arrival')}</p>
                 </div>
               </div>
             </div>
@@ -235,7 +265,7 @@ function SeatsList() {
           </div>
         }
         <div className="button_container">
-          <button onClick={(e) => clickNextPageButtonHandler(e)} className={currentSeats.length < 1 ? 'next_page nonactive_button' : 'next_page active_button'}>
+          <button onClick={(e) => clickNextPageButtonHandler(e)} className={getClassNameToNextButton()}>
             Далее
           </button>
         </div>

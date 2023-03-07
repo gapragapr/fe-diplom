@@ -1,0 +1,198 @@
+.passenger_card{
+    border: 1px solid #C4C4C4;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+    box-sizing: border-box;
+    margin-bottom: 45px;
+}
+.card_row{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 30px;
+    border-bottom: 1px dashed #928F94;
+    box-sizing: border-box;
+}
+.card_row:last-child{
+    border-bottom: none;
+}
+.name_row{
+    font-size: 30px;
+    color: #292929;
+    cursor: pointer;
+}
+.name_container{
+    display: flex;
+    align-items: center;
+}
+.name_container svg{
+    margin-right: 16px;
+}
+.close_card{
+    display: flex;
+    align-items: center;
+}
+.close_card svg{
+    cursor: pointer;
+}
+.sub_row{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.sub_row:not(:last-child){
+    margin-bottom: 45px;
+}
+.sub_row_left{
+    justify-content: flex-start;
+}
+.sub_row input{
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #928F94;
+    border-radius: 5px;
+}
+.sub_row input::placeholder{
+    font-size: 18px;
+}
+select{
+    border: 1px solid #928F94;
+    border-radius: 5px;
+    background-color: #fff;
+    width: 280px;
+    padding: 10px;
+    appearance: none;
+    font-size: 24px;
+    color: #292929;
+    background-image: url('../../../img/selectedArrow.png');
+    background-repeat: no-repeat;
+    background-position: 95% 50%;
+    cursor: pointer;
+}
+option{
+    margin-top: -30px;
+}
+.input_name{
+    font-weight: 400;
+    font-size: 16px;
+    color: #928F94;
+    margin: 0;
+    margin-bottom: 10px;
+}
+.name_input{
+    width: 280px;
+    font-size: 24px;
+}
+.gender_buttons{
+    border: 1px solid #928F94;
+    border-radius: 5px;
+    margin-right: 35px;
+}
+.gender_button{
+    padding: 8px 31px;
+    font-size: 30px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+}
+.gender_button:first-child{
+    border-right: 0.5px solid #928F94;
+}
+.gender_button:last-child{
+    border-left: 0.5px solid #928F94;
+}
+.bd_input{
+    width: 240px;
+    height: 50px;
+    font-size: 24px;
+}
+#accesAbility{
+    width: 28px;
+    height: 28px;
+    margin-right: 20px;
+    cursor: pointer;
+}
+#accesAbility + span{
+    font-size: 18px;
+    color: #292929;
+}
+.input_container:has(> label > #accesAbility){
+    display: flex;
+    align-items: center;
+}
+#docs{
+    width: fit-content;
+    padding-right: 50px;
+}
+.next_passenger{
+    justify-content: flex-end;
+}
+.next_passenger_button{
+    font-size: 24px;
+    color: #292929;
+    padding: 12px 24px;
+    border: 1px solid #292929;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+}
+.active_gender_button{
+    background-color: #FFA800;
+}
+.docs_container{
+    display: flex;
+}
+.docs_container .input_container:not(:first-child){
+    margin-left: 35px;
+}
+.docs_container input{
+    width: 205px;
+    font-size: 24px;
+    padding: 10px;
+    border: 1px solid #928F94;
+    border-radius: 5px;
+}
+
+.next_passenger:has(> .nonvalid_message){
+    background: rgba(255, 61, 0, 0.38);
+    justify-content: flex-start;
+}
+.nonvalid_message{
+    display: flex;
+    align-items: center;
+}
+.nonvalid_message img, .valid_message img{
+    width: 32px;
+    height: 32px;
+    margin-right: 16px;
+}
+.nonvalid_message p{
+    margin: 0;
+    font-size: 18px;
+}
+.nonvalid_example{
+    font-size: 18px;
+    color: #292929;
+    font-weight: 700;
+}
+.next_passenger:has(> .valid_message){
+    background: #B2F6A1;
+}
+.valid_message{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.valid_message p{
+    display: flex;
+    align-items: center;
+    margin: 0;
+    font-size: 18px;
+}
+.nonactive_passenger .card_row:not(:first-child){
+    display: none;
+}
+.nonactive_passenger .card_row:first-child{
+    border: none;
+}
