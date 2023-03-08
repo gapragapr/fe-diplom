@@ -81,7 +81,6 @@ function SidebarSettings(){
                 <div className="content_block">
                     <div className="name_wrapper">
                         <p className="block_name"><img src={bigArrowTo} alt="" />Туда <span className="sidebar_date">{getCurrentDate(ticket.departure.from.datetime)}</span></p>
-                        {svgs.minus}
                     </div>
                     <div className="block_details">
                         <div className="details_wrapper">
@@ -112,7 +111,6 @@ function SidebarSettings(){
                     <div className="content_block">
                         <div className="name_wrapper">
                             <p className="block_name"><img src={bigArrowFrom} alt="" />Обратно <span className="sidebar_date">{getCurrentDate(ticket.arrival.from.datetime)}</span></p>
-                            {svgs.minus}
                         </div>
                         <div className="block_details">
                             <div className="details_wrapper">
@@ -143,7 +141,6 @@ function SidebarSettings(){
                 <div className="content_block">
                     <div className="name_wrapper">
                         <p className="block_name">{svgs.passenger} Пассажиры</p>
-                        {svgs.minus}
                     </div>
                     <div className="block_details">
                         {getPassengers()}

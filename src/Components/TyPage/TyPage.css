@@ -1,0 +1,132 @@
+.ty_page .header-wrapper{
+    background-image: url('../../img/tyBg.png');
+    background-size: cover;
+    height: 830px;
+}
+.ty_page .footer-container{
+    margin-top: 1080px;
+}
+.ty_card{
+    width: 1400px;
+    border: 1px solid #C4C4C4;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+    background-color: #fff;
+    position: absolute;
+    top: 55%;
+    left: 24%;
+}
+.ty_row{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 60px 80px 30px 80px;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+}
+.ty_row:first-child{
+    position: relative;
+    border-bottom: 1px solid #928F94;
+    transform: rotate(0.04deg);
+}
+.ty_row:first-child::before{
+    content: 'Благодарим Вас за заказ!';
+    position: absolute;
+    width: fit-content;
+    top: -55%;
+    left: 0;
+    color: #fff;
+    font-weight: 700;
+    font-size: 72px;
+}
+.ty_row:last-child{
+    background: rgba(255, 168, 0, 0.88);
+}
+.big_bold{
+    font-weight: 700;
+    font-size: 36px;
+    color: #292929;
+}
+span.big_bold{
+    margin-left: 18px;
+}
+.ty_row .grey{
+    margin: 0;
+    font-weight: 400;
+    font-size: 36px;
+    color: #928F94;
+}
+.grey path{
+    fill: #928F94;
+}
+.grey svg{
+    width: 21px;
+    height: 27px;
+    margin-left: 5px;
+}
+.ellipses_row{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 100px;
+}
+.ellepse{
+    text-align: center;
+    font-weight: 400;
+    font-size: 18px;
+    text-align: center;
+    color: #292929;
+    width: 15%;
+}
+.ellepse img{
+    width: 155px;
+    height: 155px;
+}
+.minor_text{
+    font-weight: 400;
+    font-size: 24px;
+    color: #292929;
+    margin: 0;
+}
+.ty_text{
+    font-weight: 700;
+    font-size: 24px;
+    color: #292929;
+    margin-top: 95px;
+}
+.ty_sub_row:last-child{
+    padding: 0 80px;
+}
+.service_stars{
+    font-weight: 400;
+    font-size: 24px;
+    color: #292929;
+    display: flex;
+    align-items: center;
+}
+.service_text{
+    margin-right: 20px;
+}
+.service_stars svg{
+    margin-right: 20px;
+}
+.star{
+    cursor: pointer;
+}
+.back_home{
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 24px;
+    color: #292929;
+    padding: 17px 11px;
+    background-color: transparent;
+    border: 1px solid #3E3C41;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.stars{
+    display: flex;
+}
+.active_star path{
+    fill: #FCDC9D;
+}

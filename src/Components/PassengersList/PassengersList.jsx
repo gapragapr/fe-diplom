@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from "react-redux"
 import PassengerCard from "./PassengerCard/PassengerCard"
 import { setStep } from "../../store/appSlice"
 import { useNavigate } from "react-router"
-import './PassengersList.css'
+
 
 function PassengerList(){
     const dispatch = useDispatch()

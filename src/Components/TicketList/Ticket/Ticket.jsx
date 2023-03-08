@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router'
 import svgs from '../../../data/svg'
 import './Ticket.css'
 
-function Ticket({ticket}){
+function Ticket({ticket, isChange, clickCallBack}){
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
@@ -123,7 +123,7 @@ function Ticket({ticket}){
                         {ticket.departure.is_express && <li className="stuff_item">{svgs.express}</li>}
                         {ticket.departure.have_air_conditioning && <li className="stuff_item">{svgs.termReg}</li>}
                     </ul>
-                    <button onClick={clickFindSeatsButtonHandler} className="get_ticket">Выбрать места</button>
+                    {isChange ? <button onClick={(e) => clickCallBack('/roads')} className="change_button">Изменить</button> : <button onClick={clickFindSeatsButtonHandler} className="get_ticket">Выбрать места</button>}
                 </div>
             </div>
         </div>

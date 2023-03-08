@@ -54,7 +54,15 @@ const currentTicketSlice = createSlice({
         },
         currentSeats: [],
         seatsStuff: [],
-        passengers: []
+        passengers: [],
+        paymentDetails: {
+            name: null,
+            surname: null,
+            fatherName: null,
+            telNumber: null,
+            email: null,
+            paymentType: null
+        }
     },
     reducers: {
         setData(state, action){
@@ -81,8 +89,14 @@ const currentTicketSlice = createSlice({
         setPassengers(state, action){
             state.passengers.push(action.payload.data)
         },
+        deletePassenger(state, action){
+            state.passengers.splice(action.payload.index, 1)
+        },
         changePassenger(state, action){
             state.passengers[action.payload.index][action.payload.key] = action.payload.data
+        },
+        changePayment(state, action){
+            state.paymentDetails[action.payload.key] = action.payload.data
         },
         clearStore(state){
             state.seatsData = {};
@@ -103,6 +117,6 @@ const currentTicketSlice = createSlice({
     }
 })
 
-export const {setData, setType, setPrice, setCurrentSeats, deleteCurrentSeat, setSeatsStuff, deleteSeatStuff, setPassengers, deletePassenger, changePassenger, clearStore} = currentTicketSlice.actions
+export const {setData, setType, setPrice, setCurrentSeats, deleteCurrentSeat, setSeatsStuff, deleteSeatStuff, setPassengers, deletePassenger, changePassenger, clearStore, changePayment} = currentTicketSlice.actions
 
 export default currentTicketSlice.reducer

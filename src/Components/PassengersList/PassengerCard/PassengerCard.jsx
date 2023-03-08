@@ -14,7 +14,7 @@ function PassengerCard({index, passenger}){
     const [activeCard, setActiveCard] = useState(false)
 
     useEffect(() => {
-        passenger.passengerType === 'adult' ? dispatch(changePassenger({index: index - 1, key: 'docType', data: 'Паспорт'})) : dispatch(changePassenger({index: index - 1, key: 'docType', data: 'Свидетельство о рождении'}))
+        passenger.passengerType === 'adult' ? dispatch(changePassenger({index: index - 1, key: 'docType', data: 'Паспорт РФ'})) : dispatch(changePassenger({index: index - 1, key: 'docType', data: 'Свидетельство о рождении'}))
     })
 
     function changePassengerTypeHandler(e){
@@ -23,7 +23,7 @@ function PassengerCard({index, passenger}){
     }
     function changePassengerDocTypeHandler(e){
         e.target.value === 'Паспорт РФ' ? dispatch(changePassenger({index: index - 1, key: 'passengerType', data: 'adult'})) : dispatch(changePassenger({index: index - 1, key: 'passengerType', data: 'child'}))
-        e.target.value === 'Паспорт РФ' ? dispatch(changePassenger({index: index - 1, key: 'docType', data: 'Паспорт'})) : dispatch(changePassenger({index: index - 1, key: 'docType', data: 'Свидетельство о рождении'}))
+        e.target.value === 'Паспорт РФ' ? dispatch(changePassenger({index: index - 1, key: 'docType', data: 'Паспорт РФ'})) : dispatch(changePassenger({index: index - 1, key: 'docType', data: 'Свидетельство о рождении'}))
         e.target.value === 'Паспорт РФ' ? dispatch(changePassenger({index: index - 1, key: 'seatPrice', data: Math.floor(passenger.seatPrice * 2)})) : dispatch(changePassenger({index: index - 1, key: 'seatPrice', data: Math.floor(passenger.seatPrice / 2)}))
     }
     function changePassengerName(e, key){
@@ -126,11 +126,6 @@ function PassengerCard({index, passenger}){
         e.target.parentElement.classList.toggle('nonactive_passenger')
         e.target.parentElement.classList.contains('nonactive_passenger') ? setActiveCard(false) : setActiveCard(true)
     }
-    // function clickNextPassengerButton(e){
-    //     e.traget.parentElement.parentElement.classList.add('nonactive_passenger')
-    //     e.traget.parentElement.parentElement.nextElementSibli.classList.add('nonactive_passenger')
-    // }
-    
 
     return(
         <div className="passenger_card nonactive_passenger">
@@ -142,9 +137,9 @@ function PassengerCard({index, passenger}){
             </div>
             <div className="card_row">
                 <div className="sub_row">
-                    <select onChange={(e) => changePassengerTypeHandler(e)}>
-                        <option selected={passenger.passengerType === 'adult'} defaultValue="Взрослый">Взрослый</option>
-                        <option selected={passenger.passengerType !== 'adult'} defaultValue="Ребенок">Ребенок</option>
+                    <select value={passenger.passengerType == 'adult' ? 'Взрослый' : 'Ребенок'} onChange={(e) => changePassengerTypeHandler(e)}>
+                        <option defaultValue="Взрослый">Взрослый</option>
+                        <option defaultValue="Ребенок">Ребенок</option>
                     </select>
                 </div>
                 <div className="sub_row">
@@ -195,13 +190,13 @@ function PassengerCard({index, passenger}){
                 <div className="docs_container">
                     <div className="input_container">
                         <p className="input_name">Тип документа</p>
-                        <select id="docs" onChange={(e) => changePassengerDocTypeHandler(e)}>
-                            <option selected={passenger.passengerType === 'adult'} defaultValue="Паспорт">Паспорт РФ</option>
-                            <option selected={passenger.passengerType !== 'adult'} defaultValue="Свидетельство">Свидетельство о рождении</option>
+                        <select value={passenger.docType} id="docs" onChange={(e) => changePassengerDocTypeHandler(e)}>
+                            <option defaultValue={'Паспорт РФ'}>Паспорт РФ</option>
+                            <option defaultValue={'Свидетельство о рождении'}>Свидетельство о рождении</option>
                         </select>
                     </div>
                     
-                    {passenger.docType == 'Паспорт' && 
+                    {passenger.docType == 'Паспорт РФ' && 
                         <>
                             <div className="input_container">
                                 <p className="input_name">Серия</p>
@@ -239,7 +234,7 @@ function PassengerCard({index, passenger}){
                             </div>
                         </div> 
                     } 
-                    {nonValidDocDetails && passenger.docType == 'Паспорт' && 
+                    {nonValidDocDetails && passenger.docType == 'Паспорт РФ' && 
                         <div className="nonvalid_message">
                             <img src={errorImg} alt="" />
                             <div className="nonvalid_text">
@@ -253,7 +248,6 @@ function PassengerCard({index, passenger}){
                             <div className="nonvalid_text">
                                 <p><img src={validImg} alt="" /> Готово</p>
                             </div>
-                            {passengers.length > 1 && <button className='next_passenger_button'>Следующий пассажир</button>}
                         </div> 
                     }
                 </div>

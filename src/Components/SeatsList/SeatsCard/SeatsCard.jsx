@@ -120,10 +120,9 @@ function SeatsCard({seatsObj, type, cardIndex}) {
             dispatch(setPassengers({data: {type: type, trainType: trainType[type], seatIndex: index, cardIndex: cardIndex, passengerType: dataType, seatPrice: currentPrice, name: '', surname: '', fatherName: '', docType: '', docDetails: '', bd: '', gender: ''}}))
         } else {
             const findedIndex = currentSeats.findIndex(item => item.type == type && item.trainType == trainType[type] && item.seat == index && item.cardIndex == cardIndex)
-            const passengerIndex = passengers.findIndex(item => item.type == type && item.trainType == trainType[type] && item.seat == index && item.cardIndex == cardIndex)
             dispatch(setPrice({key: type, price: -currentSeats[findedIndex].seatPrice}))
             dispatch(deleteCurrentSeat({index: findedIndex}))
-            dispatch(deletePassenger({index: passengerIndex}))
+            dispatch(deletePassenger({index: findedIndex}))
         }
     }
     function clickStuffHandler(event, name, stuffName){

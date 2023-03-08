@@ -196,3 +196,6 @@ option{
 .nonactive_passenger .card_row:first-child{
     border: none;
 }
+.next_page{
+    margin-bottom: 30px;
+}

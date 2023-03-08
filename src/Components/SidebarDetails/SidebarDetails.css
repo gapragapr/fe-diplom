@@ -87,3 +87,6 @@
     font-weight: 600;
     margin: 0;
 }
+.passengers_sidebar .name_wrapper{
+    cursor: inherit;
+}
