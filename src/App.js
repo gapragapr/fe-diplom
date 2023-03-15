@@ -1,6 +1,5 @@
 import './App.css'
 import LandingPage from './Components/LandingPage/LandingPage';
-import ErrorPopUp from './Components/ErrorPopUp/ErrorPopUp';
 import TicketPage from './Components/TicketPage/TicketPage';
 import PassengersPage from './Components/PassengersPage/PassengersPage';
 import PaymentPage from './Components/PaymentPage/PaymentPage';

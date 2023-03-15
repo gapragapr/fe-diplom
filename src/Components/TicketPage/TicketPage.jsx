@@ -13,8 +13,6 @@ import { useSelector } from "react-redux"
 
 function TicketPage(){
     const isLoading = useSelector(state => state.appFundamentalState.isLoading)
-    const isError = useSelector(state => state.appFundamentalState.isError)
-
 
     return (
         <>
